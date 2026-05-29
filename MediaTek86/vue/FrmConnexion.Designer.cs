@@ -1,4 +1,4 @@
-﻿namespace MediaTek86
+﻿namespace MediaTek86.vue
 {
     partial class FrmConnexion
     {

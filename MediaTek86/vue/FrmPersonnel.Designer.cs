@@ -80,7 +80,6 @@
             this.btnAbsences.TabIndex = 4;
             this.btnAbsences.Text = "Gérer les absences";
             this.btnAbsences.UseVisualStyleBackColor = true;
-            this.btnAbsences.Click += new System.EventHandler(this.button4_Click);
             // 
             // FrmPersonnel
             // 

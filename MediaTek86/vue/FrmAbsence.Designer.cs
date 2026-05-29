@@ -61,7 +61,6 @@
             this.btnAjouter.TabIndex = 2;
             this.btnAjouter.Text = "Ajouter ";
             this.btnAjouter.UseVisualStyleBackColor = true;
-            this.btnAjouter.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnModifier
             // 

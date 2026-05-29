@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\MediaTek86.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -113,9 +114,7 @@
     <Compile Include="vue\FrmPersonnel.Designer.cs">
       <DependentUpon>FrmPersonnel.cs</DependentUpon>
     </Compile>
-    <Compile Include="vue\FrmConnexion.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="vue\FrmConnexion.cs" />
     <Compile Include="vue\FrmConnexion.Designer.cs">
       <DependentUpon>FrmConnexion.cs</DependentUpon>
     </Compile>

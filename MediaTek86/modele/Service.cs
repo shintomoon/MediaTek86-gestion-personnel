@@ -1,6 +1,13 @@
 ﻿namespace MediaTek86.modele
 {
     /// <summary>
+    /// Package contenant les classes métier correspondant aux tables de la base de données.
+    /// </summary>
+    internal class NamespaceDoc
+    {
+    }
+
+    /// <summary>
     /// Classe métier représentant un service
     /// </summary>
     public class Service

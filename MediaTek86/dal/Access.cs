@@ -4,6 +4,13 @@ using MediaTek86.bddmanager;
 namespace MediaTek86.dal
 {
     /// <summary>
+    /// Package contenant les classes d'accès aux données (DAL).
+    /// </summary>
+    internal class NamespaceDoc
+    {
+    }
+
+    /// <summary>
     /// Classe d'accès aux données
     /// </summary>
     public class Access

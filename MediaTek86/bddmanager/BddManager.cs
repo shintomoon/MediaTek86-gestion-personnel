@@ -1,8 +1,15 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
+using MySql.Data.MySqlClient;
 
 namespace MediaTek86.bddmanager
 {
+    /// <summary>
+    /// Package contenant la classe technique de connexion à la base de données.
+    /// </summary>
+    internal class NamespaceDoc
+    {
+    }
+
     /// <summary>
     /// Classe singleton de connexion à la base de données
     /// </summary>
