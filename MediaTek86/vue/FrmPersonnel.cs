@@ -40,11 +40,8 @@ namespace MediaTek86.vue
             bdgPersonnel.DataSource = lePersonnel;
             dgvPersonnel.DataSource = bdgPersonnel;
 
-            // Masquer la colonne IdPersonnel
             if (dgvPersonnel.Columns.Contains("IdPersonnel"))
                 dgvPersonnel.Columns["IdPersonnel"].Visible = false;
-
-            // Renommer les colonnes
             if (dgvPersonnel.Columns.Contains("Nom"))
                 dgvPersonnel.Columns["Nom"].HeaderText = "Nom";
             if (dgvPersonnel.Columns.Contains("Prenom"))
@@ -55,6 +52,81 @@ namespace MediaTek86.vue
                 dgvPersonnel.Columns["Mail"].HeaderText = "Mail";
             if (dgvPersonnel.Columns.Contains("Service"))
                 dgvPersonnel.Columns["Service"].HeaderText = "Service";
+        }
+
+        /// <summary>
+        /// Clic sur Ajouter
+        /// </summary>
+        private void btnAjouter_Click(object sender, EventArgs e)
+        {
+            FrmPersonnelModif frm = new FrmPersonnelModif();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                RemplirListePersonnel();
+            }
+        }
+
+        /// <summary>
+        /// Clic sur Modifier
+        /// </summary>
+        private void btnModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvPersonnel.CurrentRow != null)
+            {
+                Personnel personnel = (Personnel)dgvPersonnel.CurrentRow.DataBoundItem;
+                FrmPersonnelModif frm = new FrmPersonnelModif(personnel);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    RemplirListePersonnel();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un personnel.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
+        /// Clic sur Supprimer
+        /// </summary>
+        private void btnSupprimer_Click(object sender, EventArgs e)
+        {
+            if (dgvPersonnel.CurrentRow != null)
+            {
+                Personnel personnel = (Personnel)dgvPersonnel.CurrentRow.DataBoundItem;
+                DialogResult result = MessageBox.Show(
+                    "Voulez-vous vraiment supprimer " + personnel.Nom + " " + personnel.Prenom + " ?",
+                    "Confirmation de suppression",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    controller.DeletePersonnel(personnel);
+                    RemplirListePersonnel();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un personnel.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
+        /// Clic sur Gérer les absences
+        /// </summary>
+        private void btnAbsences_Click(object sender, EventArgs e)
+        {
+            if (dgvPersonnel.CurrentRow != null)
+            {
+                MessageBox.Show("Fonctionnalité bientôt disponible.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un personnel.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

@@ -25,7 +25,6 @@ namespace MediaTek86.controller
         /// <summary>
         /// Récupère la liste du personnel
         /// </summary>
-        /// <returns>Liste du personnel</returns>
         public List<Personnel> GetLePersonnel()
         {
             return access.GetLePersonnel();
@@ -34,10 +33,33 @@ namespace MediaTek86.controller
         /// <summary>
         /// Récupère la liste des services
         /// </summary>
-        /// <returns>Liste des services</returns>
         public List<Service> GetLesServices()
         {
             return access.GetLesServices();
+        }
+
+        /// <summary>
+        /// Demande l'ajout d'un personnel
+        /// </summary>
+        public void AddPersonnel(Personnel personnel)
+        {
+            access.AddPersonnel(personnel);
+        }
+
+        /// <summary>
+        /// Demande la modification d'un personnel
+        /// </summary>
+        public void UpdatePersonnel(Personnel personnel)
+        {
+            access.UpdatePersonnel(personnel);
+        }
+
+        /// <summary>
+        /// Demande la suppression d'un personnel
+        /// </summary>
+        public void DeletePersonnel(Personnel personnel)
+        {
+            access.DeletePersonnel(personnel);
         }
     }
 }

@@ -39,7 +39,6 @@ namespace MediaTek86.dal
         /// <summary>
         /// Retourne l'instance unique de la classe
         /// </summary>
-        /// <returns>Instance de Access</returns>
         public static Access GetInstance()
         {
             if (instance == null)
@@ -52,14 +51,10 @@ namespace MediaTek86.dal
         /// <summary>
         /// Contrôle l'authentification du responsable
         /// </summary>
-        /// <param name="login">Login saisi</param>
-        /// <param name="pwd">Mot de passe saisi (sera hashé)</param>
-        /// <returns>true si authentification réussie, false sinon</returns>
         public bool ControleAuthentification(string login, string pwd)
         {
             string req = "SELECT * FROM responsable ";
             req += "WHERE login=@login AND pwd=SHA2(@pwd, 256);";
-
             try
             {
                 MySqlConnection connection = bddManager.GetConnection();
@@ -82,7 +77,6 @@ namespace MediaTek86.dal
         /// <summary>
         /// Retourne la liste des services
         /// </summary>
-        /// <returns>Liste des services</returns>
         public List<Service> GetLesServices()
         {
             List<Service> lesServices = new List<Service>();
@@ -114,7 +108,6 @@ namespace MediaTek86.dal
         /// <summary>
         /// Retourne la liste du personnel
         /// </summary>
-        /// <returns>Liste du personnel</returns>
         public List<Personnel> GetLePersonnel()
         {
             List<Personnel> lePersonnel = new List<Personnel>();
@@ -152,6 +145,81 @@ namespace MediaTek86.dal
                 Console.WriteLine(e.Message);
             }
             return lePersonnel;
+        }
+
+        /// <summary>
+        /// Ajoute un personnel dans la base de données
+        /// </summary>
+        public void AddPersonnel(Personnel personnel)
+        {
+            string req = "INSERT INTO personnel(nom, prenom, tel, mail, idservice) ";
+            req += "VALUES (@nom, @prenom, @tel, @mail, @idservice);";
+            try
+            {
+                MySqlConnection connection = bddManager.GetConnection();
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(req, connection);
+                command.Parameters.AddWithValue("@nom", personnel.Nom);
+                command.Parameters.AddWithValue("@prenom", personnel.Prenom);
+                command.Parameters.AddWithValue("@tel", personnel.Tel);
+                command.Parameters.AddWithValue("@mail", personnel.Mail);
+                command.Parameters.AddWithValue("@idservice", personnel.Service.IdService);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Modifie un personnel dans la base de données
+        /// </summary>
+        public void UpdatePersonnel(Personnel personnel)
+        {
+            string req = "UPDATE personnel SET nom=@nom, prenom=@prenom, ";
+            req += "tel=@tel, mail=@mail, idservice=@idservice ";
+            req += "WHERE idpersonnel=@idpersonnel;";
+            try
+            {
+                MySqlConnection connection = bddManager.GetConnection();
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(req, connection);
+                command.Parameters.AddWithValue("@nom", personnel.Nom);
+                command.Parameters.AddWithValue("@prenom", personnel.Prenom);
+                command.Parameters.AddWithValue("@tel", personnel.Tel);
+                command.Parameters.AddWithValue("@mail", personnel.Mail);
+                command.Parameters.AddWithValue("@idservice", personnel.Service.IdService);
+                command.Parameters.AddWithValue("@idpersonnel", personnel.IdPersonnel);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Supprime un personnel de la base de données
+        /// </summary>
+        public void DeletePersonnel(Personnel personnel)
+        {
+            string req = "DELETE FROM personnel WHERE idpersonnel=@idpersonnel;";
+            try
+            {
+                MySqlConnection connection = bddManager.GetConnection();
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(req, connection);
+                command.Parameters.AddWithValue("@idpersonnel", personnel.IdPersonnel);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
