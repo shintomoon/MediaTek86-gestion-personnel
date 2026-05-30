@@ -119,8 +119,9 @@ namespace MediaTek86.vue
         {
             if (dgvPersonnel.CurrentRow != null)
             {
-                MessageBox.Show("Fonctionnalité bientôt disponible.",
-                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Personnel personnel = (Personnel)dgvPersonnel.CurrentRow.DataBoundItem;
+                FrmAbsence frm = new FrmAbsence(personnel);
+                frm.ShowDialog();
             }
             else
             {
