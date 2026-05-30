@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using MediaTek86.dal;
+﻿using MediaTek86.dal;
 using MediaTek86.modele;
+using System;
+using System.Collections.Generic;
 
 namespace MediaTek86.controller
 {
@@ -39,6 +40,13 @@ namespace MediaTek86.controller
         public void DeleteAbsence(Absence absence)
         {
             access.DeleteAbsence(absence);
+        }
+        /// <summary>
+        /// Vérifie si une absence chevauche une autre
+        /// </summary>
+        public bool AbsenceChevauche(Personnel personnel, DateTime dateDebut, DateTime dateFin, DateTime? ancienneDateDebut)
+        {
+            return access.AbsenceChevauche(personnel, dateDebut, dateFin, ancienneDateDebut);
         }
     }
 }

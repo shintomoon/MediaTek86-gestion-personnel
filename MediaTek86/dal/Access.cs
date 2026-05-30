@@ -265,5 +265,48 @@ namespace MediaTek86.dal
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
         }
+        /// <summary>
+        /// Vérifie si un personnel a déjà une absence qui chevauche le créneau donné
+        /// </summary>
+        /// <param name="personnel">Le personnel concerné</param>
+        /// <param name="dateDebut">Date de début du nouveau créneau</param>
+        /// <param name="dateFin">Date de fin du nouveau créneau</param>
+        /// <param name="ancienneDateDebut">Date de début de l'absence en cours de modification (null si ajout)</param>
+        /// <returns>true s'il y a un chevauchement</returns>
+        public bool AbsenceChevauche(Personnel personnel, DateTime dateDebut, DateTime dateFin, DateTime? ancienneDateDebut)
+        {
+            string req = "SELECT * FROM absence WHERE idpersonnel=@idpersonnel ";
+            req += "AND NOT (datefin < @datedebut OR datedebut > @datefin) ";
+            if (ancienneDateDebut.HasValue)
+            {
+                req += "AND datedebut <> @ancienneDateDebut;";
+            }
+            else
+            {
+                req += ";";
+            }
+            try
+            {
+                MySqlConnection connection = bddManager.GetConnection();
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(req, connection);
+                command.Parameters.AddWithValue("@idpersonnel", personnel.IdPersonnel);
+                command.Parameters.AddWithValue("@datedebut", dateDebut);
+                command.Parameters.AddWithValue("@datefin", dateFin);
+                if (ancienneDateDebut.HasValue)
+                {
+                    command.Parameters.AddWithValue("@ancienneDateDebut", ancienneDateDebut.Value);
+                }
+                MySqlDataReader reader = command.ExecuteReader();
+                bool chevauche = reader.HasRows;
+                connection.Close();
+                return chevauche;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
     }
 }

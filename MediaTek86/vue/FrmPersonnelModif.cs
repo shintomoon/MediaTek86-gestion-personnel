@@ -61,19 +61,25 @@ namespace MediaTek86.vue
         /// </summary>
         private void btnEnregistrer_Click(object sender, EventArgs e)
         {
-
             if (!ChampsValides()) return;
 
             Service service = (Service)cboService.SelectedItem;
 
             if (personnel == null)
             {
+                // Mode ajout
                 Personnel nouveau = new Personnel(0, txtNom.Text, txtPrenom.Text,
                     txtTel.Text, txtMail.Text, service);
                 controller.AddPersonnel(nouveau);
             }
             else
             {
+                // Mode modification — demande de confirmation
+                DialogResult confirm = MessageBox.Show(
+                    "Confirmer l'enregistrement des modifications ?",
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm != DialogResult.Yes) return;
+
                 Personnel modifie = new Personnel(personnel.IdPersonnel,
                     txtNom.Text, txtPrenom.Text, txtTel.Text, txtMail.Text, service);
                 controller.UpdatePersonnel(modifie);
@@ -87,7 +93,6 @@ namespace MediaTek86.vue
         /// </summary>
         private void btnAnnuler_Click(object sender, EventArgs e)
         {
-
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }

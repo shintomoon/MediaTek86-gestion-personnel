@@ -66,9 +66,19 @@ namespace MediaTek86.vue
         /// </summary>
         private void btnEnregistrer_Click(object sender, EventArgs e)
         {
+            // Vérification cohérence des dates
             if (dtpDateFin.Value < dtpDateDebut.Value)
             {
                 MessageBox.Show("La date de fin doit être postérieure à la date de début.",
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Vérification chevauchement
+            DateTime? ancienneDateDebut = absence?.DateDebut;
+            if (controller.AbsenceChevauche(personnel, dtpDateDebut.Value, dtpDateFin.Value, ancienneDateDebut))
+            {
+                MessageBox.Show("Une absence est déjà programmée sur ce créneau.",
                     "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -82,6 +92,11 @@ namespace MediaTek86.vue
             }
             else
             {
+                DialogResult confirm = MessageBox.Show(
+                    "Confirmer l'enregistrement des modifications ?",
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm != DialogResult.Yes) return;
+
                 controller.UpdateAbsence(absence, nouvelle);
             }
 
