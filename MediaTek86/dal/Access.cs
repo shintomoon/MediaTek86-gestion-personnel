@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using MediaTek86.bddmanager;
+using MediaTek86.modele;
 using MySql.Data.MySqlClient;
 
 namespace MediaTek86.dal
 {
-    /// <summary>
-    /// Package contenant les classes d'accès aux données (DAL).
-    /// </summary>
-    internal class NamespaceDoc
-    {
-    }
-
     /// <summary>
     /// Classe d'accès aux données
     /// </summary>
@@ -83,6 +77,81 @@ namespace MediaTek86.dal
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Retourne la liste des services
+        /// </summary>
+        /// <returns>Liste des services</returns>
+        public List<Service> GetLesServices()
+        {
+            List<Service> lesServices = new List<Service>();
+            string req = "SELECT * FROM service ORDER BY nom;";
+            try
+            {
+                MySqlConnection connection = bddManager.GetConnection();
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(req, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Service service = new Service(
+                        (int)reader["idservice"],
+                        (string)reader["nom"]
+                    );
+                    lesServices.Add(service);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return lesServices;
+        }
+
+        /// <summary>
+        /// Retourne la liste du personnel
+        /// </summary>
+        /// <returns>Liste du personnel</returns>
+        public List<Personnel> GetLePersonnel()
+        {
+            List<Personnel> lePersonnel = new List<Personnel>();
+            string req = "SELECT p.idpersonnel, p.nom, p.prenom, p.tel, p.mail, ";
+            req += "s.idservice, s.nom AS nomservice ";
+            req += "FROM personnel p JOIN service s ON p.idservice = s.idservice ";
+            req += "ORDER BY p.nom, p.prenom;";
+            try
+            {
+                MySqlConnection connection = bddManager.GetConnection();
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(req, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Service service = new Service(
+                        (int)reader["idservice"],
+                        (string)reader["nomservice"]
+                    );
+                    Personnel personnel = new Personnel(
+                        (int)reader["idpersonnel"],
+                        (string)reader["nom"],
+                        (string)reader["prenom"],
+                        (string)reader["tel"],
+                        (string)reader["mail"],
+                        service
+                    );
+                    lePersonnel.Add(personnel);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return lePersonnel;
         }
     }
 }

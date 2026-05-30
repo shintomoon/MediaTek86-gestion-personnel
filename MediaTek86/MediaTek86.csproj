@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="bddmanager\BddManager.cs" />
     <Compile Include="controller\FrmConnexionController.cs" />
+    <Compile Include="controller\FrmPersonnelController.cs" />
     <Compile Include="dal\Access.cs" />
     <Compile Include="modele\Absence.cs" />
     <Compile Include="modele\Personnel.cs" />
