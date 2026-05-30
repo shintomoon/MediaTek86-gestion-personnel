@@ -76,6 +76,7 @@
             this.btnConnexion.TabIndex = 4;
             this.btnConnexion.Text = "Se connecter";
             this.btnConnexion.UseVisualStyleBackColor = true;
+            this.btnConnexion.Click += new System.EventHandler(this.btnConnexion_Click);
             // 
             // FrmConnexion
             // 

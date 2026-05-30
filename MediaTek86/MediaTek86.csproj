@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bddmanager\BddManager.cs" />
+    <Compile Include="controller\FrmConnexionController.cs" />
     <Compile Include="dal\Access.cs" />
     <Compile Include="modele\Absence.cs" />
     <Compile Include="modele\Personnel.cs" />
@@ -114,7 +115,9 @@
     <Compile Include="vue\FrmPersonnel.Designer.cs">
       <DependentUpon>FrmPersonnel.cs</DependentUpon>
     </Compile>
-    <Compile Include="vue\FrmConnexion.cs" />
+    <Compile Include="vue\FrmConnexion.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="vue\FrmConnexion.Designer.cs">
       <DependentUpon>FrmConnexion.cs</DependentUpon>
     </Compile>
@@ -152,8 +155,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
